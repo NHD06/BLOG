@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Danh sách bài viết</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        .blog-card {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 20px;
+            display: flex;
+            flex-direction: column;
+            max-width: 400px;
+        }
+        .blog-image img {
+            width: 100%;
+            height: auto;
+        }
+        .blog-content {
+            padding: 15px;
+        }
+        .blog-title {
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+        .blog-meta {
+            font-size: 12px;
+            color: gray;
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+
+<h2>Danh sách bài viết</h2>
+
+<div id="blog-list">
+    <div class="blog-card" th:each="post : ${posts}">
+        <div class="blog-image">
+            <img th:src="${post.thumbnail}" th:alt="${post.title}">
+        </div>
+        <div class="blog-content">
+            <div class="blog-meta">
+                <span class="blog-author">Admin</span> ·
+                <span class="blog-date" th:text="${#dates.format(post.created_at, 'dd/MM/yyyy')}"></span>
+            </div>
+            <h3 class="blog-title">
+                <a th:href="@{'/posts/' + ${post.id}}" th:text="${#strings.length(post.title) > 50 ? #strings.substring(post.title, 0, 50) + '...' : post.title}"></a>
+            </h3>
+            <p class="blog-excerpt" th:text="${#strings.length(post.description) > 85 ? #strings.substring(post.description, 0, 85) + '...' : post.description}">></p>
+            <div class="blog-stats">
+                <span><i class="fas fa-eye"></i> <span th:text="${post.views}"></span> views</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

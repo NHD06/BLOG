@@ -1,0 +1,895 @@
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YouTube Sidebar Clone</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        ::-webkit-scrollbar {
+            display: none; /* Ẩn thanh cuộn */
+        }
+        body {
+            display: flex;
+            font-family: 'Roboto', sans-serif;
+            color: #0f0f0f; /* Màu chữ mặc định */
+            font-size: 14px; /* Cỡ chữ mặc định */
+            margin: 0;
+            overflow: auto; /* Vẫn cho phép cuộn */
+            -ms-overflow-style: none; /* Ẩn thanh cuộn trên IE/Edge */
+            scrollbar-width: none; /* Ẩn thanh cuộn trên Firefox */
+        }
+         /* Thanh Header */
+         .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            background: #fff;
+            border-bottom: 1px solid #ddd;
+            position: fixed;
+            width: 100%;
+            height: 64px;
+            top: 0;
+            z-index: 1000;
+        }
+
+        /* .header .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .header .logo img {
+            height: 24px;
+            margin-right: 10px;
+        } */
+
+        .header .search-box {
+            flex: 1;
+            max-width: 600px;
+            display: flex;
+            border: 1px solid #ccc;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .search-box input {
+            flex: 1;
+            padding: 8px 12px;
+            border: none;
+            outline: none;
+        }
+
+        .search-box button {
+            background: #f8f8f8;
+            border: none;
+            padding: 8px 12px;
+            cursor: pointer;
+        }
+
+        .header .icons {
+            display: flex;
+            align-items: center;
+        }
+
+        .header .icons i {
+            font-size: 20px;
+            margin: 0 10px;
+            cursor: pointer;
+        }
+
+        .content{
+            margin-left: 280px;
+            padding: 20px;
+            margin-right: 30px;
+            width: 100%;
+            margin-top: 66px;
+        }
+        .sidebar {
+            width: 250px;
+            height: 100vh;
+            background: white;
+            border-right: 1px solid #ddd;
+            padding: 10px;
+            position: fixed;
+            overflow-y: auto;
+            margin-top: 66px;
+
+        }
+        .logo {
+            padding: 10px 34px;
+        }
+        .logo a {
+            color: rgb(209,66,0);
+            font-size: 30px;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        .menu-item {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            font-size: 14px;
+            text-decoration: none;
+            color: black;
+            border-radius: 10px;
+            transition: background 0.3s;
+        }
+        .menu-item:hover {
+            background: #f0f0f0;
+        }
+        .menu-item.active {
+            background: #e5e5e5;
+            font-weight: bold;
+        }
+        .menu-item i {
+            font-size: 18px;
+            margin-right: 15px;
+        }
+        .section-title {
+            font-size: 14px;
+            font-weight: bold;
+            color: #606060;
+            padding: 10px 15px;
+            margin-top: 10px;
+        }
+        /* Main Layout */
+        .app-container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .app-sidebar {
+            width: 280px;
+            background: white;
+            border-right: 1px solid #e0e0e0;
+            height: 100vh;
+            position: fixed;
+            overflow-y: auto;
+        }
+
+        .app-main {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header Styles */
+        .app-header {
+            height: 60px;
+            background: white;
+            border-bottom: 1px solid #e9ecef;
+            display: flex;
+            align-items: center;
+            padding: 0 20px;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        /* Content Styles */
+        .app-content {
+            padding: 30px;
+            background: #f1f4f6;
+        }
+
+        /* Cards */
+        .stats-cards .card {
+            margin-bottom: 20px;
+        }
+
+        .widget-content {
+            padding: 1rem;
+        }
+
+        .widget-numbers {
+            font-size: 2.5rem;
+            font-weight: bold;
+        }
+
+        /* Sidebar Styles */
+        .app-sidebar__inner {
+            padding: 20px 0;
+        }
+
+        .menu-header {
+            color: #3f6ad8;
+            font-size: 0.8rem;
+            font-weight: bold;
+            padding: 15px 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .vertical-nav-menu {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .vertical-nav-menu li a {
+            display: flex;
+            align-items: center;
+            padding: 10px 20px;
+            color: #343a40;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+        }
+
+        .vertical-nav-menu li a:hover {
+            background: #f8f9fa;
+            color: #3f6ad8;
+        }
+
+        .vertical-nav-menu li a i {
+            width: 24px;
+            margin-right: 10px;
+            font-size: 1rem;
+        }
+
+        .vertical-nav-menu li a.active {
+            color: #3f6ad8;
+            background: #e0f3ff;
+        }
+
+        .sub-menu {
+            list-style: none;
+            padding-left: 34px;
+            display: none;
+        }
+
+        .has-arrow.active + .sub-menu {
+            display: block;
+        }
+
+        .sub-menu li a {
+            padding: 8px 20px;
+            font-size: 0.85rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 991.98px) {
+            .app-sidebar {
+                width: 80px;
+            }
+            
+            .app-sidebar:hover {
+                width: 280px;
+            }
+
+            .vertical-nav-menu li a span,
+            .menu-header {
+                display: none;
+            }
+
+            .app-sidebar:hover .vertical-nav-menu li a span,
+            .app-sidebar:hover .menu-header {
+                display: block;
+            }
+        }
+
+        /* Stats Cards */
+        .stats-card {
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .stats-card .card-body {
+            padding: 1.5rem;
+            position: relative;
+        }
+
+        .stats-icon {
+            position: absolute;
+            right: 1.5rem;
+            top: 1.5rem;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: rgba(63, 106, 216, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .stats-icon i {
+            font-size: 1.5rem;
+            color: #3f6ad8;
+        }
+
+        .stats-card h5 {
+            color: #6c757d;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .stats-card h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .stats-trend {
+            font-size: 0.85rem;
+        }
+
+        .stats-trend.up {
+            color: #28a745;
+        }
+
+        .stats-trend.down {
+            color: #dc3545;
+        }
+
+        /* Charts */
+        .card-header {
+            background: none;
+            border-bottom: 1px solid #e9ecef;
+            padding: 1rem 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .card-header h5 {
+            margin: 0;
+            font-size: 1.1rem;
+        }
+
+        .card-header-actions {
+            display: flex;
+            gap: 1rem;
+        }
+
+        /* Tables */
+        .table {
+            margin: 0;
+        }
+
+        .table th {
+            border-top: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .table td {
+            vertical-align: middle;
+        }
+
+        .status-badge {
+            padding: 0.25rem 0.5rem;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .status-published {
+            background: #e8f5e9;
+            color: #28a745;
+        }
+
+        .status-draft {
+            background: #fff3e0;
+            color: #f57c00;
+        }
+
+        .status-pending {
+            background: #e3f2fd;
+            color: #1976d2;
+        }
+
+        /* User Activity */
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .user-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+        }
+
+        .activity-time {
+            font-size: 0.85rem;
+            color: #6c757d;
+        }
+
+        /* New Post Styles */
+        .featured-image-upload {
+            border: 2px dashed #ddd;
+            border-radius: 8px;
+            padding: 2rem;
+            text-align: center;
+            background: #f8f9fa;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .featured-image-upload:hover {
+            border-color: #3f6ad8;
+            background: #f1f4ff;
+        }
+
+        .upload-area {
+            cursor: pointer;
+        }
+
+        .upload-area i {
+            font-size: 2rem;
+            color: #6c757d;
+            margin-bottom: 1rem;
+        }
+
+        .upload-area p {
+            margin: 0;
+            color: #6c757d;
+        }
+
+        /* Editor Styles */
+        .ql-container {
+            height: 400px;
+        }
+
+        .ql-toolbar {
+            border-top-left-radius: 4px;
+            border-top-right-radius: 4px;
+        }
+
+        .ql-container {
+            border-bottom-left-radius: 4px;
+            border-bottom-right-radius: 4px;
+        }
+
+        /* Form Controls */
+        .form-control-lg {
+            font-size: 1.5rem;
+        }
+
+        /* Card Header Actions */
+        .card-header-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        /* SEO Card */
+        .seo-preview {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 4px;
+            margin-top: 1rem;
+        }
+
+        .pagination {
+        display: flex;
+        justify-content: center; /* Căn giữa */
+        align-items: center; /* Canh thẳng hàng */
+        margin-top: 20px;
+        gap: 10px; /* Khoảng cách giữa các nút */
+    }
+
+    .page-link {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        background: #007bff;
+        color: white;
+        border-radius: 50%;
+        text-decoration: none;
+        font-size: 18px;
+        transition: 0.3s;
+    }
+
+    .page-link:hover {
+        background: #0056b3;
+    }
+
+    .page-info {
+        font-weight: bold;
+        font-size: 16px;
+    }
+
+
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <div class="logo">
+            <a href="">Blog Admin</a>
+        </div>
+        <div class="search-box">
+            <input type="text" placeholder="Tìm kiếm...">
+            <button><i class="fas fa-search"></i></button>
+        </div>
+        <div class="icons">
+            <i class="fas fa-bell"></i>
+            <a href="/user/profile" th:href="@{/users/profile}"><i class="fas fa-user-circle"></i></a>
+        </div>
+    </div>
+
+    <div class="sidebar">
+        <!-- <div class="logo">
+            <h2>BLOG NHD</h2>
+        </div> -->
+        
+        <a href="#" class="menu-item active"><i class="fas fa-home"></i> Dashboard</a>
+
+        <div class="section-title">Posts</div>
+        <a href="#" class="menu-item"><i class="fa-solid fa-file-contract"></i>List of articles</a>
+        <a th:href="@{/posts/add-post}" class="menu-item"><i class="fa-solid fa-file-signature"></i>Add new post</a>
+        <a href="#" class="menu-item"><i class="fas fa-cut"></i>Edit post</a>
+
+        <div class="section-title">Categories</div>
+        <a href="#" class="menu-item"><i class="fa-solid fa-folder-open"></i>List of categories</a>
+        <a href="#" class="menu-item"><i class="fa-solid fa-folder-plus"></i>Edit category</a>
+        <a href="#" class="menu-item"><i class="fa-solid fa-folder"></i>Manage portfolio status</a>
+
+        <div class="section-title">Setting</div>
+        <a href="#" class="menu-item"><i class="fa-solid fa-user"></i>Account settings</a>
+        <a href="#" class="menu-item"><i class="fa-solid fa-gear"></i>System Settings</a>
+        <a href="#" class="menu-item"><i class="fas fa-sign-out-alt"></i>Logout</a>
+    </div>
+
+    <div class="content">
+        <div class="app-main">
+                <div class="container-fluid">
+                    <!-- Overview Stats -->
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="card stats-card">
+                                <div class="card-body">
+                                    <div class="stats-icon">
+                                        <i class="fas fa-file-alt"></i>
+                                    </div>
+                                    <h5>Tổng số bài viết</h5>
+                                    <!-- Hiển thị tổng số bài viết -->
+                                    <h2 th:text="${totalPosts}">0</h2> <!-- Thay thế bằng tổng số bài viết -->
+                                    <div class="stats-trend up">
+                                        <i class="fas fa-arrow-up"></i> 12% so với tháng trước
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-3">
+                            <div class="card stats-card">
+                                <div class="card-body">
+                                    <div class="stats-icon">
+                                        <i class="fas fa-users"></i>
+                                    </div>
+                                    <h5>Tổng số người dùng</h5>
+                                    <!-- Hiển thị tổng số người dùng -->
+                                    <h2 th:text="${totalUsers}">0</h2> <!-- Thay thế bằng tổng số người dùng -->
+                                    <div class="stats-trend up">
+                                        <i class="fas fa-arrow-up"></i> 10% so với tháng trước
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card stats-card">
+                                <div class="card-body">
+                                    <div class="stats-icon">
+                                        <i class="fas fa-eye"></i>
+                                    </div>
+                                    <h5>Tổng lượt xem</h5>
+                                    <!-- Hiển thị tổng số lượt xem -->
+                                    <h2 th:text="${totalViews}">0</h2> <!-- Thay thế bằng tổng số lượt xem -->
+                                    <div class="stats-trend up">
+                                        <i class="fas fa-arrow-up"></i> 12% so với tháng trước
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card stats-card">
+                                <div class="card-body">
+                                    <div class="stats-icon">
+                                        <i class="fas fa-share-alt"></i>
+                                    </div>
+                                    <h5>Tổng lượt chia sẻ</h5>
+                                    <!-- Hiển thị tổng số lượt chia sẻ -->
+                                    <h2 id="total-shares" th:text="${totalShares}">0</h2> 
+                                    <div class="stats-trend down">
+                                        <i class="fas fa-arrow-down"></i> 5% so với tháng trước
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                                              
+                    </div>
+
+                    <!-- Charts Row -->
+                    <div class="row mt-4">
+                        <div class="col-md-8">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5>Thống kê tăng trưởng</h5>
+                                    <div class="card-header-actions">
+                                        <select class="form-select form-select-sm">
+                                            <option>7 ngày qua</option>
+                                            <option>30 ngày qua</option>
+                                            <option>3 tháng qua</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <canvas id="growthChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5>Phân loại bài viết</h5>
+                                </div>
+                                <div class="card-body">
+                                    <canvas id="postCategoriesChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Recent Activities -->
+                    <div class="row mt-4">
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5>Danh sách bài viết</h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th>ID</th>
+                                                    <th>Tiêu đề</th>
+                                                    <th>Thumbnail</th>
+                                                    <th>Hành động</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr th:each="post : ${posts}">
+                                                    <td th:text="${post.id}"></td>
+                                                    <td th:text="${#strings.length(post.title) > 15 ? #strings.substring(post.title, 0, 15) + '...' : post.title}"></td>
+                                                    <td>
+                                                        <img th:if="${post.thumbnail != null and not #strings.isEmpty(post.thumbnail)}" 
+                                                             th:src="'data:image/jpeg;base64,' + ${post.thumbnail}" 
+                                                             alt="Thumbnail" width="100" height="80">
+                                                        <span th:unless="${post.thumbnail != null and not #strings.isEmpty(post.thumbnail)}">No Image</span>
+                                                    </td>
+                                                    <td>
+                                                        <a th:href="@{'/posts/' + ${post.id}}" class="btn btn-sm btn-primary" title="Xem">
+                                                            <i class="fas fa-eye"></i>
+                                                        </a>
+                                                        <a th:href="@{'/posts/edit/' + ${post.id}}" class="btn btn-sm btn-warning" title="Sửa">
+                                                            <i class="fas fa-edit"></i>
+                                                        </a>
+                                                        <a href="#" th:attr="onclick=|deletePost(${post.id})|" class="btn btn-sm btn-danger" title="Xóa">
+                                                            <i class="fas fa-trash"></i>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                            
+                                    <!-- Nút phân trang -->
+                                    <div class="pagination">
+                                        <a th:if="${currentPage > 0}" th:href="@{/admin/home(page=${currentPage - 1})}" class="page-link">
+                                            <i class="fas fa-chevron-left"></i>
+                                        </a>
+                                        
+                                        <span class="page-info">Trang [[${currentPage + 1}]] / [[${totalPages}]]</span>
+
+                                        <a th:if="${currentPage + 1 < totalPages}" th:href="@{/admin/home(page=${currentPage + 1})}" class="page-link">
+                                            <i class="fas fa-chevron-right"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5>Người dùng hoạt động</h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th>Id</th>
+                                                    <th>Tên Người dùng</th>
+                                                    <th>Email</th>
+                                                    <th>Avatar</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr th:each="user : ${users}">
+                                                    <td th:text="${user.id}"></td>
+                                                    <td th:text="${user.username}"></td>
+                                                    <td th:text="${user.email}"></td>
+                                                    <!-- <td th:text="${user.avatar}"></td> -->
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="pagination">
+                                        <a th:if="${currentPage > 0}" th:href="@{/admin/home(page=${currentPage - 1}, size=${size})}" class="page-link">
+                                            <i class="fas fa-chevron-left"></i>
+                                        </a>
+                                        <span class="page-info">Trang [[${currentPage + 1}]] / [[${totalPages}]]</span>
+                                        <a th:if="${currentPage + 1 < totalPages}" th:href="@{/admin/home(page=${currentPage + 1}, size=${size})}" class="page-link">
+                                            <i class="fas fa-chevron-right"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            <!-- </div> -->
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            fetch("/api/post-categories")
+                .then(response => response.json())
+                .then(data => {
+                    const ctx = document.getElementById("postCategoriesChart");
+                    new Chart(ctx, {
+                        type: "doughnut",
+                        data: {
+                            labels: data.categories,
+                            datasets: [{
+                                data: data.postCounts,
+                                backgroundColor: ['#3f6ad8', '#28a745', '#ffc107', '#dc3545']
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            plugins: {
+                                legend: {
+                                    position: "bottom"
+                                }
+                            }
+                        }
+                    });
+                })
+                .catch(error => console.error("Lỗi khi tải dữ liệu:", error));
+        });
+    </script>
+    
+    
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const menuItems = document.querySelectorAll(".menu-item");
+            menuItems.forEach(item => {
+                item.addEventListener("click", function() {
+                    menuItems.forEach(i => i.classList.remove("active"));
+                    this.classList.add("active");
+                });
+            });
+        });
+    </script>
+    <script>
+        // Đóng tất cả các menu khác khi click ra ngoài
+        document.addEventListener('click', function(event) {
+            const menus = document.querySelectorAll('.options-menu');
+            menus.forEach(menu => {
+                if (!menu.parentElement.contains(event.target)) {
+                    menu.classList.remove('show');
+                }
+            });
+        });
+
+        // Toggle menu khi click vào nút
+        function toggleOptionsMenu(button) {
+            event.stopPropagation(); // Ngăn event click lan ra document
+            
+            // Đóng tất cả các menu khác
+            const allMenus = document.querySelectorAll('.options-menu');
+            allMenus.forEach(menu => {
+                if (menu !== button.nextElementSibling) {
+                    menu.classList.remove('show');
+                }
+            });
+            
+            // Toggle menu hiện tại
+            const menu = button.nextElementSibling;
+            menu.classList.toggle('show');
+        } 
+    </script>
+    <script>
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            var ctx = document.getElementById('growthChart').getContext('2d');
+    
+            // Lấy dữ liệu từ Thymeleaf dưới dạng JSON hợp lệ
+            var postsPerMonth = [[${postsPerMonth}]]; // Thymeleaf render mảng
+            var usersPerMonth = [[${usersPerMonth}]];
+    
+            console.log("Posts Data:", postsPerMonth);
+            console.log("Users Data:", usersPerMonth);
+    
+            var growthChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['T1', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7', 'T8', 'T9', 'T10', 'T11', 'T12'],
+                    datasets: [
+                        {
+                            label: 'Bài viết',
+                            data: postsPerMonth, // Sử dụng biến JavaScript đã khai báo
+                            borderColor: '#3f6ad8',
+                            tension: 0.4,
+                            fill: false
+                        },
+                        {
+                            label: 'Người dùng',
+                            data: usersPerMonth, // Sử dụng biến JavaScript đã khai báo
+                            borderColor: '#28a745',
+                            tension: 0.4,
+                            fill: false
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'bottom'
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+    
+    
+    <script>
+        function deletePost(postId) {
+            if (confirm("Bạn có chắc muốn xóa bài viết này không?")) {
+                fetch(`/posts/delete/${postId}`, {
+                    method: "DELETE"
+                })
+                .then(response => {
+                    if (response.ok) {
+                        alert("✅ Bài viết đã được xóa!");
+                        location.reload();
+                    } else {
+                        alert("❌ Lỗi khi xóa bài viết!");
+                    }
+                })
+                .catch(error => {
+                    alert("❌ Lỗi kết nối đến server!");
+                });
+            }
+        }
+
+    </script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</body>
+</html>

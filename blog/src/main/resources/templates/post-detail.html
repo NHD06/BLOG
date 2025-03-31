@@ -1,0 +1,624 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog Post</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100;400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+</head>
+<style>
+    body {
+    font-family: 'Roboto Slab', serif;
+    line-height: 1.6;
+    color: #333;
+    margin: 0;
+    padding: 0;
+    }
+
+    .container {
+        max-width: 700px;
+        margin: 30px auto;
+        padding: 20px;
+        border-radius: 8px;
+        border: 0.5px solid #ddd;
+        padding: 60px 100px;
+        text-align: justify;
+    }
+
+    .blog-header {
+        text-align: left;
+    }
+
+    .author-info {
+        display: flex;
+        margin-bottom: 10px;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .avatar img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 50%;
+    }
+
+    .avatar span {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
+    }
+
+
+    .details{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .details p {
+        margin: 0;
+        font-size: 14px;
+        color: #777;
+    }
+
+    .author-name {
+        font-weight: bold;
+        color: #333;
+    }
+
+    .meta {
+        font-size: 12px;
+        font-family: 'Open Sans', sans-serif;
+    }
+
+    .blog-title {
+        font-family: 'Roboto Slab', serif;
+        font-size: 28px;
+        font-weight: inherit;
+        /* margin-top: 10px; */
+        color: #222;
+    }
+
+    .blog-subtitle {
+        font-size: 16px;
+        color: #666;
+        margin-bottom: 29px;
+    }
+
+    .blog-image {
+        width: 100%;
+        border-radius: 5px;
+        margin-top: 10px;
+    }
+
+    .blog-content h2 {
+        font-size: 20px;
+        margin-top: 20px;
+        color: #222;
+    }
+
+    .blog-content p {
+        font-size: 16px;
+        color: #555;
+    }
+
+    .hashtag {
+        color: #ff6600;
+        font-weight: bold;
+    }
+
+    blockquote {
+        border-left: 4px solid #ff6600;
+        padding-left: 10px;
+        font-size: 18px;
+        color: #444;
+        font-style: italic;
+    }
+
+    .comment{
+        max-width: 700px;
+        margin: 30px auto;
+        padding: 20px;
+        border: 0.5px solid #ddd;
+        padding: 32px 100px;
+        text-align: justify;
+    }
+    
+    .container-comment {
+        width: 50%;
+        margin: auto;
+        background: #fff;
+        padding: 20px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .comment-box h3 {
+        font-size: 26px;
+        margin-bottom: 30px;
+        border-bottom: 0.5px solid #ddd;
+        padding-bottom: 17px;
+    }
+
+    .comment-input textarea {
+        width: 97%;
+        height: 80px;
+        padding: 10px;
+        border: 1px solid #ccc;
+    }
+
+    .comment-actions {
+        display: flex;
+        gap: 10px;
+        margin-top: 5px;
+    }
+
+    .comment-actions button {
+        border: none;
+        background: none;
+        cursor: pointer;
+        font-size: 16px;
+        color: #555;
+    }
+
+    .comment-footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 10px;
+    }
+
+    .login-message {
+        color: gray;
+        font-size: 14px;
+    }
+
+    .comment-buttons button {
+        padding: 8px 15px;
+        border: none;
+        cursor: pointer;
+    }
+
+    .cancel-btn {
+        background: #ccc;
+        color: black;
+    }
+
+    .publish-btn {
+        background: black;
+        color: white;
+    }
+
+    .comment-list {
+        margin-top: 20px;
+    }
+
+    .comment-list ul {
+        list-style: none;
+        padding: 0;
+    }
+
+    .comment-list li {
+        background: #eee;
+        padding: 10px;
+        margin-top: 5px;
+        border-radius: 5px;
+    }
+    /* Container chính */
+    .comment-container-content {
+        max-width: 700px;
+        margin: auto;
+    }
+
+    /* Bình luận */
+    .comment-content {
+        display: flex;
+        align-items: flex-start;
+        border-bottom: 1px solid #ddd;
+        padding-bottom: 10px;
+        margin-bottom: 10px;
+    }
+
+    /* Avatar */
+    .avatar {
+        width: 40px;
+        height: 40px;
+        /* background-color: brown; */
+        color: white;
+        font-weight: bold;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        font-size: 18px;
+        margin-right: 10px;
+        flex-shrink: 0;
+    }
+
+    /* Nội dung bình luận */
+    .comment-content-text {
+        flex: 1;
+    }
+
+    /* Tên người dùng */
+    .comment-content-text strong {
+        color: #333;
+    }
+
+    /* Thời gian */
+    .text-secondary {
+        color: #777;
+        font-size: 12px;
+        margin-left: 8px;
+    }
+
+    /* Nội dung */
+    .comment-content-text p {
+        margin: 5px 0;
+        font-size: 14px;
+        color: #444;
+    }
+
+    /* Hành động (Like, Phản hồi) */
+    .comment-actions {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        font-size: 14px;
+    }
+
+    .comment-actions span {
+        cursor: pointer;
+        color: #007bff;
+        transition: color 0.3s;
+    }
+
+    .comment-actions span:hover {
+        color: #0056b3;
+    }
+
+    /* Like icon */
+    .comment-actions i {
+        margin-right: 5px;
+    }
+    .like-btn.liked i {
+        color: red;
+    }
+
+    .share {
+        position: relative;
+        display: inline-block;
+    }
+
+    .share-menu {
+        display: none;
+        position: absolute;
+        top: 100%;
+        right: 0;
+        background: white;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        padding: 5px 0;
+        z-index: 1000;
+        min-width: 150px;
+    }
+
+    .share-menu a {
+        display: block;
+        padding: 8px 12px;
+        text-decoration: none;
+        color: black;
+    }
+
+    .share.active .share-menu {
+        display: block;
+    }
+
+    .share-menu button{
+        border: none;
+        background-color: #fff;
+        width: 100%;
+        padding: 10px;
+        text-align: justify;
+        cursor: pointer;
+    }
+
+    .share-menu button:hover{
+        background-color: #eee9e9;
+    }
+
+</style>
+<body>
+
+    <div class="container">
+        <div class="blog-header">
+            <div class="author-info">
+                <div class="details">
+                    <div class="avatar"><img src="/images/admin.jpg" alt=""></div>
+                    <p class="meta">Admin<span style="margin: 0 8px;"> • </span><span th:text="${post.formattedCreatedAt}"></span>
+                        <span style="margin: 0 8px;"> • </span>2 min read</p>
+                </div>
+                <div class="share">
+                    <a href="#" onclick="toggleShareMenu(event)">
+                        <i class="fa fa-ellipsis-v"></i>
+                    </a>
+                    <div class="share-menu">
+                        <form id="shareForm">
+                            <input type="hidden" name="postId" th:value="${post.id}">
+                            <button style="color: #3b5998;" type="button" onclick="sharePost('FACEBOOK')">
+                                <i class="fa-brands fa-facebook"></i> Facebook
+                            </button>
+                            <button style="color: #1DA1F2;" type="button" onclick="sharePost('TWITTER')">
+                                <i class="fa-brands fa-twitter"></i> Twitter
+                            </button>
+                            <button style="color: #0077b5;" type="button" onclick="sharePost('LINKEDIN')">
+                                <i class="fa-brands fa-linkedin"></i> LinkedIn
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+            <h1 class="blog-title" th:text="${post.title}"></h1>
+            <p class="blog-subtitle" th:text="${post.description}"></p>
+            <img class="blog-image" th:src="${post.thumbnailBase64}" alt="Thumbnail">
+        </div>
+
+        <div class="blog-content">
+
+            <p th:utext="${post.content}"></p>
+            <h2>Encourage Engagement & Networking</h2>
+            <blockquote>
+                <em>Be original, show off your style, and tell your story.</em>
+            </blockquote>
+            <p>
+                "The journey in IT is full of challenges but also exciting opportunities. I believe that continuous learning and adaptability are key to staying ahead in this ever-evolving field. If you share the same passion for technology or have insights to exchange, feel free to leave a comment or connect with me on LinkedIn/GitHub. Let’s grow and innovate together!"
+            </p>
+        </div>
+
+    </div>
+
+    <div class="comment">
+        <div class="comment-box">
+            <h3>Comments</h3>
+            <div class="comment-input">
+                <textarea id="commentText" placeholder="Write a comment..."></textarea>
+                <div class="comment-actions">
+                    <button class="emoji-btn"><i class="far fa-smile"></i></button>
+                    <button class="image-btn"><i class="fas fa-camera"></i></button>
+                    <button class="gif-btn"><i class="fas fa-gift"></i></button>
+                    <button class="video-btn"><i class="fas fa-video"></i></button>
+                </div>
+                <div class="comment-footer">
+                    <p class="login-message">Log in to publish as a member</p>
+                    <div class="comment-buttons">
+                        <button class="cancel-btn">Cancel</button>
+                        <button class="publish-btn">Publish</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="comment-list">
+            <h4>Recent Comments</h4>
+            <div id="commentsContainer">
+                <!-- Bình luận sẽ được thêm vào đây -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            document.querySelectorAll("img").forEach(img => {
+                img.classList.add("blog-image");
+            });
+        });
+        document.addEventListener("DOMContentLoaded", function () {
+            document.querySelectorAll(".like-btn").forEach(btn => {
+                btn.addEventListener("click", function () {
+                    this.classList.toggle("liked"); // Thêm hoặc bỏ class "liked"
+                });
+            });
+        });
+
+    </script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+    const publishBtn = document.querySelector(".publish-btn");
+    const commentText = document.getElementById("commentText");
+    const commentsContainer = document.getElementById("commentsContainer");
+    const postId = window.location.pathname.split("/").pop(); // Lấy ID bài viết từ URL
+
+    // 🛑 Kiểm tra phần tử có tồn tại không (tránh lỗi null)
+    if (!publishBtn || !commentText || !commentsContainer) {
+        console.error("Không tìm thấy phần tử cần thiết!");
+        return;
+    }
+
+    // 📝 Giả sử bạn đã lưu avatar của user vào localStorage hoặc session
+    const currentUser = {
+        username: "currentUsername",  // Thay bằng giá trị thực tế
+        avatar: localStorage.getItem("userAvatar") || null  // Lấy avatar từ localStorage
+    };
+
+    // 📝 Xử lý khi nhấn nút "Publish"
+    publishBtn.addEventListener("click", function () {
+        const content = commentText.value.trim();
+        if (content === "") {
+            alert("❌ Vui lòng nhập nội dung bình luận!");
+            return;
+        }
+
+        console.log("📌 Gửi bình luận:", { postId, content });
+
+        fetch("/api/comments", {
+            method: "POST",
+            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+            body: `postId=${postId}&content=${encodeURIComponent(content)}`
+        })
+        .then(response => {
+            if (!response.ok) throw new Error("🚨 Lỗi khi đăng bình luận!");
+            return response.text();
+        })
+        .then(message => {
+            alert(" " + message);
+            addCommentToUI(content, currentUser); // Cập nhật UI ngay lập tức
+            commentText.value = "";  // Xóa nội dung sau khi đăng
+        })
+        .catch(error => {
+            console.error("❌ Lỗi:", error);
+            alert("⚠️ Không thể đăng bình luận. Vui lòng thử lại!");
+        });
+    });
+
+    // ✅ Hàm thêm bình luận vào UI ngay sau khi đăng
+    function addCommentToUI(content, user) {
+        const commentItem = document.createElement("div");
+        commentItem.classList.add("d-flex", "align-items-start", "mb-3");
+
+        // 🔹 Nếu user có avatar, dùng ảnh. Nếu không, lấy chữ cái đầu
+        let avatarHTML = user.avatar
+            ? `<img src="data:image/png;base64,${user.avatar}" alt="Avatar">`
+            : `<span class="default-avatar">${user.username.charAt(0).toUpperCase()}</span>`;
+
+        commentItem.innerHTML = `
+            <div class="comment-container-content">
+                <div class="comment-content">
+                    <div class="avatar">${avatarHTML}</div>
+                    <div>
+                        <div class="bg-light p-3 rounded">
+                            <div class="comment-content-text">
+                                <strong>Bạn</strong>
+                                <span class="text-secondary">Vừa xong</span>
+                                <p class="mb-1">${content}</p>
+                                <div class="comment-actions">
+                                    <span class="like-btn">
+                                        <i class="fa-regular fa-heart"></i>
+                                    </span>
+                                    <span>Phản hồi</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>`;
+
+        commentsContainer.prepend(commentItem); // Hiển thị ngay trên đầu danh sách
+    }
+});
+
+    </script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const postId = window.location.pathname.split("/").pop(); // Lấy ID bài viết từ URL
+            console.log("Lấy postId từ URL:", postId); // Debug ID bài viết
+
+            fetch(`/api/comments/${postId}`)
+                .then(response => {
+                    if (!response.ok) throw new Error("Lỗi khi tải danh sách bình luận!");
+                    return response.json();
+                })
+                .then(comments => {
+                    const commentList = document.getElementById("commentsContainer");
+                    if (!commentList) {
+                        console.error("Không tìm thấy phần tử commentList!");
+                        return;
+                    }
+
+                    commentList.innerHTML = ""; // Xóa danh sách cũ
+
+                    comments.forEach(comment => {
+                        const commentItem = document.createElement("div");
+                        commentItem.classList.add("d-flex", "align-items-start", "mb-3");
+                        commentItem.innerHTML = `
+                            <div class="comment-container-content">
+                                <div class="comment-content">
+                                    <div class="avatar">
+                                        ${comment.avatar ? `<img src="data:image/png;base64,${comment.avatar}" alt="Avatar">` : comment.username.charAt(0).toUpperCase()}
+                                    </div>
+                                    <div class="comment-content-text">
+                                        <strong>@${comment.username}</strong>
+                                        <span class="text-secondary">${comment.createdAt}</span>
+                                        <p>${comment.content}</p>
+                                        <div class="comment-actions">
+                                            <span class="like-btn">
+                                                <i class="fa-regular fa-heart"></i>
+                                            </span>
+                                            <span>Phản hồi</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>`;
+                        commentList.appendChild(commentItem);
+                    });
+                })
+                .catch(error => console.error("Lỗi:", error));
+        });
+    </script>
+    <script>
+        // Hiển thị menu khi bấm vào nút share
+        function toggleShareMenu(event) {
+            event.preventDefault();
+            let shareDiv = event.target.closest('.share');
+            shareDiv.classList.toggle('active');
+        }
+
+        // Đóng menu khi click ra ngoài
+        document.addEventListener("click", function (event) {
+            let shareMenus = document.querySelectorAll(".share");
+            shareMenus.forEach(menu => {
+                if (!menu.contains(event.target)) {
+                    menu.classList.remove("active");
+                }
+            });
+        });
+    </script>
+
+<script>
+    function sharePost(platform) {
+        const postId = document.querySelector('input[name="postId"]').value;
+
+        fetch('/api/share', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: `postId=${postId}&platform=${platform}`
+        })
+        .then(response => response.text())
+        .then(data => {
+            console.log("Kết quả:", data);
+
+            // Chuyển hướng đến nền tảng chia sẻ
+            const postUrl = `http://localhost:8080/posts/${postId}`;
+            let shareUrl = '';
+
+            switch (platform) {
+                case 'FACEBOOK':
+                    shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(postUrl)}`;
+                    break;
+                case 'TWITTER':
+                    shareUrl = `https://twitter.com/intent/tweet?url=${encodeURIComponent(postUrl)}`;
+                    break;
+                case 'LINKEDIN':
+                    shareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(postUrl)}`;
+                    break;
+            }
+
+            window.location.href = shareUrl; // Chuyển hướng
+        })
+        .catch(error => console.error("Lỗi:", error));
+    }
+</script>
+
+</body>
+</html>

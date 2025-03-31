@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YouTube Sidebar Clone</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="https://cdn.ckeditor.com/4.22.1/full/ckeditor.js"></script>
+    <style>
+        ::-webkit-scrollbar {
+            display: none; /* Ẩn thanh cuộn */
+        }
+        body {
+            display: flex;
+            font-family: 'Roboto', sans-serif;
+            color: #0f0f0f; /* Màu chữ mặc định */
+            font-size: 14px; /* Cỡ chữ mặc định */
+            margin: 0;
+            overflow: auto; /* Vẫn cho phép cuộn */
+            -ms-overflow-style: none; /* Ẩn thanh cuộn trên IE/Edge */
+            scrollbar-width: none; /* Ẩn thanh cuộn trên Firefox */
+        }
+         /* Thanh Header */
+         .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            background: #fff;
+            border-bottom: 1px solid #ddd;
+            position: fixed;
+            width: 100%;
+            height: 64px;
+            top: 0;
+            z-index: 1000;
+        }
+
+        /* .header .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .header .logo img {
+            height: 24px;
+            margin-right: 10px;
+        } */
+
+        .header .search-box {
+            flex: 1;
+            max-width: 600px;
+            display: flex;
+            border: 1px solid #ccc;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .search-box input {
+            flex: 1;
+            padding: 8px 12px;
+            border: none;
+            outline: none;
+        }
+
+        .search-box button {
+            background: #f8f8f8;
+            border: none;
+            padding: 8px 12px;
+            cursor: pointer;
+        }
+
+        .header .icons {
+            display: flex;
+            align-items: center;
+        }
+
+        .header .icons i {
+            font-size: 20px;
+            margin: 0 10px;
+            cursor: pointer;
+        }
+
+        .content{
+            margin-left: 280px;
+            padding: 20px;
+            margin-right: 30px;
+            width: 100%;
+            margin-top: 34px;
+        }
+        .content h2{
+            text-align: center;
+            margin-bottom: 18px;
+        }
+        .sidebar {
+            width: 250px;
+            height: 100vh;
+            background: white;
+            border-right: 1px solid #ddd;
+            padding: 10px;
+            position: fixed;
+            overflow-y: auto;
+            margin-top: 66px;
+
+        }
+        .logo {
+            padding: 10px 34px;
+        }
+        .logo a {
+            color: rgb(209,66,0);
+            font-size: 30px;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        .menu-item {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            font-size: 14px;
+            text-decoration: none;
+            color: black;
+            border-radius: 10px;
+            transition: background 0.3s;
+        }
+        .menu-item:hover {
+            background: #f0f0f0;
+        }
+        .menu-item.active {
+            background: #e5e5e5;
+            font-weight: bold;
+        }
+        .menu-item i {
+            font-size: 18px;
+            margin-right: 15px;
+        }
+        .section-title {
+            font-size: 14px;
+            font-weight: bold;
+            color: #606060;
+            padding: 10px 15px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <div class="logo">
+            <!-- <img src="https://upload.wikimedia.org/wikipedia/commons/b/b8/YouTube_Logo_2017.svg" alt="Logo"> -->
+            <a href="">Blog Admin</a>
+        </div>
+        <div class="search-box">
+            <input type="text" placeholder="Tìm kiếm...">
+            <button><i class="fas fa-search"></i></button>
+        </div>
+        <div class="icons">
+            <i class="fas fa-bell"></i>
+            <i class="fas fa-user-circle"></i>
+        </div>
+    </div>
+
+    <div class="sidebar">
+        <!-- <div class="logo">
+            <h2>BLOG NHD</h2>
+        </div> -->
+        
+        <a th:href="@{/admin/home}" class="menu-item active"><i class="fas fa-home"></i> Dashboard</a>
+
+        <div class="section-title">Posts</div>
+        <a th:href="@{/posts/list-post}" class="menu-item"><i class="fa-solid fa-file-contract"></i>List of articles</a>
+        <a href="#" class="menu-item"><i class="fa-solid fa-file-signature"></i>Add new post</a>
+        <a href="#" class="menu-item"><i class="fas fa-cut"></i>Edit post</a>
+
+        <div class="section-title">Categories</div>
+        <a href="#" class="menu-item"><i class="fa-solid fa-folder-open"></i>List of categories</a>
+        <a href="#" class="menu-item"><i class="fa-solid fa-folder-plus"></i>Edit category</a>
+        <a href="#" class="menu-item"><i class="fa-solid fa-folder"></i>Manage portfolio status</a>
+
+        <div class="section-title">Setting</div>
+        <a href="#" class="menu-item"><i class="fa-solid fa-user"></i>Account settings</a>
+        <a href="#" class="menu-item"><i class="fa-solid fa-gear"></i>System Settings</a>
+        <a th:href="@{/login}" class="menu-item"><i class="fas fa-sign-out-alt"></i>Logout</a>
+    </div>
+
+    <div class="content">
+        <div class="container mt-4">
+            <h2>Thêm Bài Viết</h2>
+            <form id="postForm" action="http://localhost:8080/posts/add" method="POST" enctype="multipart/form-data">
+                <div class="mb-3">
+                    <label class="form-label">Tiêu đề bài viết</label>
+                    <input type="text" class="form-control" name="title" placeholder="Nhập tiêu đề" required>
+                </div>
+            
+                <div class="mb-3">
+                    <label class="form-label">Slug (URL bài viết)</label>
+                    <input type="text" class="form-control" name="slug" placeholder="Tự động tạo từ tiêu đề">
+                </div>
+            
+                <div class="mb-3">
+                    <label class="form-label">Ảnh đại diện</label>
+                    <input type="file" class="form-control" name="thumbnail" required>
+                </div>
+            
+                <div class="mb-3">
+                    <label class="form-label">Danh mục</label>
+                    <select class="form-select" name="category">
+                        <option value="myself">Myself</option>
+                        <option value="it-skills">IT skills</option>
+                        <option value="experience">Experience</option>
+                        <option value="technology">Technology</option>
+                    </select>
+                </div>
+            
+                <div class="mb-3">
+                    <label class="form-label">Tags</label>
+                    <input type="text" class="form-control" name="tags" placeholder="Nhập tag, phân cách bằng dấu phẩy">
+                </div>
+            
+                <div class="mb-3">
+                    <label class="form-label">Nội dung bài viết</label>
+                    <textarea id="editor" name="content"></textarea>
+                </div>
+                
+            
+                <div class="mb-3">
+                    <label class="form-label">Tóm tắt ngắn (Meta Description)</label>
+                    <textarea class="form-control" name="description" rows="3"></textarea>
+                </div>
+            
+                <!-- <div class="form-check mb-3">
+                    <input type="checkbox" class="form-check-input" name="allowComments">
+                    <label class="form-check-label">Cho phép bình luận</label>
+                </div> -->
+            
+                <div class="mb-3">
+                    <label class="form-label">Trạng thái</label>
+                    <select class="form-select" name="status">
+                        <option value="draft">Bản nháp</option>
+                        <option value="published">Công khai</option>
+                        <option value="hidden">Ẩn</option>
+                    </select>
+                </div>
+            
+                <button type="submit" class="btn btn-primary">Lưu bài viết</button>
+            </form>            
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const menuItems = document.querySelectorAll(".menu-item");
+            menuItems.forEach(item => {
+                item.addEventListener("click", function() {
+                    menuItems.forEach(i => i.classList.remove("active"));
+                    this.classList.add("active");
+                });
+            });
+        });
+    </script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+        const editorElement = document.getElementById("editor");
+        if (editorElement) {
+            CKEDITOR.replace("editor", {
+                extraPlugins: "font",
+                font_names: "Inter/Inter; Roboto/Roboto; Open Sans/Open Sans; Lato/Lato; Montserrat/Montserrat; Fira Code/Fira Code;" +
+                    "Arial/Arial, Helvetica, sans-serif; Times New Roman/Times New Roman, Times, serif; Courier New/Courier New, Courier, monospace;",
+                removeButtons: "",
+                toolbar: [
+                    { name: "styles", items: ["Font", "FontSize"] },
+                    { name: "basicstyles", items: ["Bold", "Italic", "Underline", "Strike"] },
+                    { name: "paragraph", items: ["NumberedList", "BulletedList", "-", "Outdent", "Indent"] },
+                    { name: "insert", items: ["Link", "Image", "Table"] },
+                    { name: "colors", items: ["TextColor", "BGColor"] },
+                    { name: "tools", items: ["Maximize"] }
+                ],
+                enterMode: CKEDITOR.ENTER_BR,  // Xuống dòng sẽ là <br> thay vì <p>
+                shiftEnterMode: CKEDITOR.ENTER_BR, // Shift + Enter cũng xuống dòng thành <br>
+                autoParagraph: false, // Không tự động thêm <p>
+                removePlugins: 'elementspath' // Bỏ hiển thị đường dẫn thẻ HTML ở dưới editor
+            });
+        } else {
+            console.error("Không tìm thấy textarea có ID 'editor'");
+        }
+    });
+    </script>
+
+
+    <!-- <script>
+        document.addEventListener("DOMContentLoaded", function () {
+    const form = document.getElementById("postForm");
+
+    form.addEventListener("submit", async function (event) {
+        event.preventDefault();
+
+        const postData = {
+            title: document.getElementById("title").value,
+            slug: document.getElementById("slug").value,
+            category: document.getElementById("category").value,
+            tags: document.getElementById("tags").value,
+            content: window.CKEDITOR ? CKEDITOR.instances.editor.getData() : document.getElementById("editor").value,
+            description: document.getElementById("description").value,
+            allowComments: document.getElementById("allowComments").checked,
+            status: document.getElementById("status").value,
+            thumbnail: null // Không gửi file ảnh, chỉ gửi URL nếu có
+        };
+
+        try {
+            const response = await fetch("http://localhost:8080/posts", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(postData)
+            });
+
+            if (response.ok) {
+                alert("Bài viết đã lưu thành công!");
+                form.reset();
+            } else {
+                alert("Lưu bài viết thất bại!");
+            }
+        } catch (error) {
+            console.error("Lỗi khi lưu bài viết:", error);
+        }
+    });
+});
+
+
+    </script> -->
+    
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/scripts.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="js/dashboard.js"></script>
+</body>
+</html>
