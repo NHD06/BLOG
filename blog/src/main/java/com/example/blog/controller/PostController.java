@@ -5,7 +5,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.example.blog.model.Post;
-import com.example.blog.model.User;
 import com.example.blog.repository.PostRepository;
 import com.example.blog.service.CommentService;
 import com.example.blog.service.PostService;
@@ -16,14 +15,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.http.HttpStatus;
 
-import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 @RequestMapping("/posts")
@@ -78,13 +71,6 @@ public class PostController {
         model.addAttribute("post", post);
         return "post-detail"; 
     }
-
-    // @GetMapping("/list-post")
-    // public String listPosts(Model model) {
-    //     List<Post> posts = postRepository.findAll();
-    //     model.addAttribute("posts", posts);
-    //     return "admin/posts/post-list"; 
-    // }
 
     @GetMapping("/post-all")
     public String BlogAll(Model model) {

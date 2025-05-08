@@ -4,7 +4,6 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Base64;
 import java.util.List;
 
 import jakarta.persistence.*;
@@ -25,17 +24,17 @@ public class Post {
     private String title;
     private String slug;
 
-    private String thumbnail; // Lưu ảnh dưới dạng BLOB (Binary Large Object)
+    private String thumbnail; 
 
     private String category;
-    private String tags; // Lưu tags dưới dạng chuỗi (phân cách bằng dấu phẩy)
+    private String tags; 
 
     @Lob
     private String content;
 
     private String description;
-    // private boolean allowComments;
-    private String status; // draft, public, hidden
+    
+    private String status; 
 
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
@@ -70,7 +69,7 @@ public class Post {
         }
     }
     
-    @Transient  // Không lưu vào database
+    @Transient  
     private Long commentCount;
 
     public Long getCommentCount() {

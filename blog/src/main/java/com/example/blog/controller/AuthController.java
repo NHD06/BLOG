@@ -24,12 +24,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -78,7 +76,7 @@ public class AuthController {
             model.addAttribute("errorMessage", "Lỗi: Vai trò không hợp lệ!");
         }
         return "login"; // Giữ người dùng trên trang đăng nhập
-        }
+    }
 
     // Xác định trang home dựa trên role
     @GetMapping("/home")

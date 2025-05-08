@@ -6,7 +6,6 @@ import lombok.*;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Optional;
 
 @Entity
 @Table(name = "comments")
@@ -37,7 +36,7 @@ public class Comment {
     private Post post;
 
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false) // ✅ Đảm bảo user_id không null
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
     @ManyToOne

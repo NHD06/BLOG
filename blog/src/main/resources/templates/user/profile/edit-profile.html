@@ -12,12 +12,12 @@
 </head>
 <style>
     .profile-container {
-    max-width: 800px;
-    margin: 40px auto;
-    background: #fff;
-    border-radius: 10px;
-    box-shadow: 0 0 20px rgba(0,0,0,0.1);
-}
+        max-width: 800px;
+        margin: 40px auto;
+        background: #fff;
+        border-radius: 10px;
+        box-shadow: 0 0 20px rgba(0,0,0,0.1);
+    }
 
 .profile-header {
     position: relative;
@@ -119,17 +119,6 @@
     border-top: 1px solid #eee;
 }
 
-/* Responsive */
-@media (max-width: 768px) {
-    .profile-container {
-        margin: 20px;
-    }
-
-    .profile-content {
-        padding: 60px 20px 20px;
-    }
-}
-
 .edit-profile-btn {
     position: absolute;
     top: 20px;
@@ -194,6 +183,21 @@
 .hidden {
     display: none;
 } 
+
+@media (max-width: 768px){
+    .cover-photo{
+        border-radius: 0;
+    }
+
+    .profile-container {
+        margin: 0;
+    }
+    
+    .container{
+        padding: 0;
+    }
+
+}
 </style>
 <body>
     <form th:action="@{/users/edit/{id}(id=${user.id})}" method="post" enctype="multipart/form-data">

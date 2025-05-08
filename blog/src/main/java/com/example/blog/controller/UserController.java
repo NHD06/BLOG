@@ -1,25 +1,17 @@
 package com.example.blog.controller;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.example.blog.model.Post;
 import com.example.blog.model.User;
 import com.example.blog.repository.UserRepository;
 import com.example.blog.service.UserService;
 
-import java.io.IOException;
 import java.security.Principal;
-import java.sql.Date;
 import java.time.LocalDate;
-import java.util.Base64;
 import java.util.List;
 import java.util.Optional;
 

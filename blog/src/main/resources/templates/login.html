@@ -218,6 +218,75 @@ body{
 .container.active .toggle-right{
     transform: translateX(200%);
 }
+
+@media (max-width: 767px) {
+    .container {
+        width: 100%;
+        min-height: 100vh;
+        border-radius: 0;
+        box-shadow: none;
+    }
+
+    .form-container {
+        width: 100% !important;
+        position: static;
+        transform: translateX(0) !important;
+        z-index: auto !important;
+        opacity: 1 !important;
+        animation: none !important;
+    }
+
+    .toggle-container {
+        display: none;
+    }
+
+    .container:not(.active) .sign-up {
+        display: none;
+    }
+
+    .container.active .sign-in {
+        display: none;
+    }
+
+    /* .container.active .sign-up {
+        display: flex;
+    } */
+
+    .sign-in, .sign-up {
+        width: 100% !important;
+    }
+}
+
+.extra-links {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.extra-links a#createAccount {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .extra-links a#createAccount {
+    display: inline;
+  }
+}
+
+.mobile-switch-to-login {
+  display: none;
+  text-align: center;
+  margin-top: 10px;
+  font-size: 14px;
+}
+
+@media (max-width: 768px) {
+  .mobile-switch-to-login {
+    display: block;
+  }
+}
+
 </style>
 <body>
 
@@ -239,6 +308,9 @@ body{
                     <option value="USER">User</option>
                     <option value="ADMIN">Admin</option>
                 </select>
+                <div class="mobile-switch-to-login">
+                    Already have an account? <a style="text-decoration: underline;" href="#" id="switchToLogin">Sign in</a>
+                  </div>
                 <button type="submit">Sign Up</button>
             </form>
         </div>
@@ -254,7 +326,7 @@ body{
                 <span>or use your email password</span>
                 <input type="text" name="username" placeholder="Username">
                 <input type="password" name="password" placeholder="Password">
-                <a href="#">Forget Your Password?</a>
+                <a href="#" id="createAccount">Create New Account? <span style="text-decoration: underline;">Sign Up</span></a>                               
                 <button type="submit">Sign In</button>
             </form>
         </div>
@@ -286,6 +358,19 @@ body{
         loginBtn.addEventListener('click', () => {
             container.classList.remove("active");
         });
+
+
+        document.getElementById('createAccount').addEventListener('click', function(e) {
+            e.preventDefault();
+            container.classList.add("active"); // chuyển sang form đăng ký
+        });
+
+        document.getElementById('switchToLogin').addEventListener('click', function(e) {
+            e.preventDefault();
+            container.classList.remove("active"); // Quay lại form login
+        });
+
+
     </script>
 </body>
 

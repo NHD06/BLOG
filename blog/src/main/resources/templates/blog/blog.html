@@ -18,17 +18,27 @@
         font-family: "Comic Sans MS", cursive;
     }
 
-/* Container chung */
-    .wrapper {
-        max-width: 1200px;
-        margin: 0 auto;
-    }
+    /* Container chung */
+        .wrapper {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
 
-/* Header Styles */
+    /* Header Styles */
+    body {
+            padding-top: 80px;
+        }
+
+    /* Header Styles */
     header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
         background-color: #fff;
-        padding: 20px 0;
-        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        padding: 15px 0;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        z-index: 1000;
     }
 
     .header-container {
@@ -42,6 +52,14 @@
     .logo {
         font-size: 24px;
         font-weight: bold;
+        color: rgb(209,66,0);
+    }
+
+    /* Icon menu toggle */
+    .menu-toggle {
+        display: none;
+        font-size: 28px;
+        cursor: pointer;
         color: rgb(209,66,0);
     }
 
@@ -59,6 +77,12 @@
 
     .nav-menu li a:hover {
         color: rgb(209,66,0);
+    }
+
+    .blog-stats{
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
     }
 
     /* Footer Styles */
@@ -191,31 +215,67 @@
         color: rgb(209,66,0);
     }
 
-    .filter{
-    display: flex;
-    justify-content: space-between;
-    margin-top: 64px;
-    margin-bottom: 64px;
-    font-size: 16px;
+    .filter {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        align-items: center;
+        gap: 16px;
+        margin: 64px 0;
+        font-size: 16px;
+        position: relative;
     }
 
-    .filter .filter-links{
-
+    .filter-links {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
     }
 
-    .filter .filter-links a{
-        padding: 4px 16px;
+    .filter-links a {
+        padding: 6px 16px;
         text-decoration: none;
         color: #333;
+        border: 1px solid transparent;
+        border-radius: 20px;
+        transition: all 0.3s ease;
     }
 
-    .filter .filter-links a:hover{
-        color: #b85c38;
+    .filter-links a:hover,
+    .filter-links a.active {
+        background-color: #b85c38;
+        color: white;
+        border-color: #b85c38;
     }
 
-    .filter input{
+    .filter input {
         border-radius: 24px;
-        padding: 7px 21px;
+        padding: 8px 16px;
+        border: 1px solid #ccc;
+        font-size: 16px;
+        width: 220px;
+        transition: box-shadow 0.3s ease;
+    }
+
+    .filter input:focus {
+        outline: none;
+        box-shadow: 0 0 0 2px #b85c38;
+    }
+
+    /* Toggle button */
+    .filter-toggle {
+        display: none;
+        background: none;
+        border: none;
+        font-size: 24px;
+        cursor: pointer;
+    }
+
+    .section-title {
+        text-align: center;
+        margin-bottom: 40px;
+        font-size: 2.5em;
+        color: #333;
     }
 
     .blog-posts {
@@ -339,6 +399,126 @@
     .blog-posts{
         padding-bottom: 128px;
     }
+
+/* Responsive */
+    @media (max-width: 992px) {
+        .wrapper{
+            padding: 0 18px;
+        }
+        .filter {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .filter-toggle-input-group {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            gap: 12px;
+            padding: 0 18px;
+        }
+
+        .filter input {
+            width: 100%;
+            flex: 1;
+        }
+
+        .filter-toggle {
+            display: block;
+            font-size: 24px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+
+        .filter-links {
+            flex-direction: column;
+            display: none;
+            width: 100%;
+            gap: 8px;
+            margin-top: 12px;
+        }
+
+        .filter-links.show {
+            display: flex;
+        }
+    }
+    @media (max-width: 768px) {
+        .nav-menu {
+            display: none;
+            flex-direction: column;
+            background-color: #fff;
+            position: absolute;
+            top: 72px; /* bằng với header height */
+            right: 0;
+            width: 200px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            padding: 10px 0;
+            gap: 0;
+        }
+
+        .nav-menu.active {
+            display: flex;
+        }
+
+        .nav-menu li {
+            padding: 10px 20px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .menu-toggle {
+            display: block;
+            position: absolute;
+            right: 18px;
+        }
+
+        .header-container {
+            flex-wrap: wrap;
+        }
+
+        .categories-section {
+            grid-template-columns: 1fr;
+        }
+        
+        .blog-grid {
+            grid-template-columns: 1fr;
+        }
+        
+        .section-title {
+            font-size: 2em;
+        }
+        
+        .form-row {
+            grid-template-columns: 1fr;
+        }
+
+        .footer-content {
+            grid-template-columns: 1fr;
+            text-align: center;
+            padding: 18px;
+        }
+
+        .footer-left {
+            padding-right: 0;
+        }
+
+        .social-links {
+            justify-content: center;
+        }
+
+        .form-row {
+            grid-template-columns: 1fr;
+        }
+
+        .submit-btn {
+            float: none;
+            margin: 0 auto;
+            display: block;
+        }
+    }
+
 </style>
 <body>
     <!-- Header placeholder -->
@@ -346,14 +526,14 @@
         <div class="wrapper">
             <div class="header-container">
                 <div class="logo">BLOG NHD</div>
+                <div class="menu-toggle" id="menu-toggle">☰</div>
                 <nav>
                     <ul class="nav-menu">
-                        <li><a href="/user/home/home.html">Home</a></li>
-                        <li><a href="/components/about/about.html">Category</a></li>
-                        <li><a href="/user/blog/blog.html">Blog</a></li>
-                        <li><a href="/components/contact/contact.html">Contact</a></li>
-                        <li><a href="/user/profile/view-profile.html"><span th:text="${user != null ? user.name : 'Guest'}"></span>
-                            <i class="fa-solid fa-chevron-down"></i></a></li>
+                        <li><a href="/user/home">Home</a></li>
+                        <li><a href="#categories">Category</a></li>
+                        <li><a href="#blog">Blog</a></li>
+                        <li><a href="#about">About</a></li>
+                        <li><a href="#contact">Contact</a></li>              
                     </ul>
                 </nav>
             </div>
@@ -363,6 +543,10 @@
     <!-- Main Content -->
     <div class="wrapper">
         <div class="filter">
+            <div class="filter-toggle-input-group">
+                <button class="filter-toggle">&#9776;</button>
+                <input type="text" id="searchInput" placeholder="Search to post..." />
+            </div>
             <div class="filter-links">
                 <a href="#" class="filter-item active" data-category="all">All Posts</a>
                 <a href="#" class="filter-item" data-category="myself">Myself</a>
@@ -370,15 +554,15 @@
                 <a href="#" class="filter-item" data-category="experience">Experience</a>
                 <a href="#" class="filter-item" data-category="technology">Technology</a>
             </div>
-            <input type="text" id="searchInput" placeholder="Search to post..." />
         </div>
+        
         
         <!-- Blog Posts Container -->
         <div class="blog-posts">
             <!-- Luxury Travel Posts -->
             <div th:each="post : ${posts}" th:data-category="${post.category}" class="blog-card">
                 <div class="blog-image">
-                    <a th:href="@{'/post/' + ${post.id}}">
+                    <a href="">
                         <img th:src="${post.thumbnail}" alt="Blog Image">
                     </a>
                 </div>
@@ -513,7 +697,26 @@
         });
 
     </script>
+
+    <script>
+        const toggleBtn = document.querySelector('.filter-toggle');
+        const filterLinks = document.querySelector('.filter-links');
+
+        toggleBtn.addEventListener('click', () => {
+            filterLinks.classList.toggle('show');
+        });
+    </script>
+
     <script src="/user/home/header.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        const toggle = document.getElementById('menu-toggle');
+        const navMenu = document.querySelector('.nav-menu');
+    
+        toggle.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+        });
+    </script>
 </body>
 </html>

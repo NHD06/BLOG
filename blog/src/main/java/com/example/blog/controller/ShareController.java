@@ -1,10 +1,6 @@
 package com.example.blog.controller;
 
 import com.example.blog.model.Share;
-import com.example.blog.service.ShareService;
-
-import lombok.RequiredArgsConstructor;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,23 +9,11 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.List;
-
-import org.springframework.web.bind.annotation.*;
-
-import java.util.Map;
-import java.util.Optional;
-
-import com.example.blog.model.Share;
 import com.example.blog.model.User;
 import com.example.blog.model.Post;
 import com.example.blog.repository.ShareRepository;
 import com.example.blog.repository.UserRepository;
 import com.example.blog.repository.PostRepository;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
-
-import java.security.Principal;
 
 @RestController
 @RequestMapping("/api")
